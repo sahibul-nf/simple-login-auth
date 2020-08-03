@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:login_page_flutter_ui/register_page.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -14,7 +15,7 @@ class _LoginPageState extends State<LoginPage> {
         child: Stack(
           children: <Widget>[
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
+              padding: const EdgeInsets.symmetric(horizontal: 24),
               child: Container(
                 margin: EdgeInsets.only(top: 20),
                 color: Colors.indigo[100],
@@ -26,9 +27,7 @@ class _LoginPageState extends State<LoginPage> {
                           icon: Icon(Icons.arrow_back),
                           iconSize: 30,
                           color: Colors.deepPurple[600],
-                          onPressed: () {
-                            Navigator.pop(context);
-                          }),
+                          onPressed: () {}),
                       Align(
                         alignment: Alignment.topCenter,
                         child: Image.asset(
@@ -130,7 +129,11 @@ class ToSignUp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {},
+      onTap: () {
+        Navigator.push(context, MaterialPageRoute(builder: (context) {
+          return RegisterPage();
+        }));
+      },
       child: RichText(
           text: TextSpan(
               text: 'Start fresh now? ',
