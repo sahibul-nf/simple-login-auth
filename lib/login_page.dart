@@ -1,12 +1,29 @@
 import 'package:flutter/material.dart';
+import 'package:login_page_flutter_ui/home_page.dart';
 import 'package:login_page_flutter_ui/register_page.dart';
+import 'package:flushbar/flushbar.dart';
 
 class LoginPage extends StatefulWidget {
+
+  String email;
+  String password;
+
+  LoginPage({
+    this.email,
+    this.password
+  });  
+
   @override
   _LoginPageState createState() => _LoginPageState();
 }
 
 class _LoginPageState extends State<LoginPage> {
+  
+  LoginPage data = LoginPage(email: 'admin', password: '123');
+
+  TextEditingController emailC = TextEditingController();
+  TextEditingController passwordC = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -63,19 +80,65 @@ class _LoginPageState extends State<LoginPage> {
                                   style:
                                       TextStyle(fontSize: 20, letterSpacing: 1),
                                 )),
-                            inputField(
-                                'example@gmail.com',
-                                'Email Address',
-                                Icon(Icons.email,
-                                    color: Colors.deepPurple[600])),
-                            inputField(
-                                'Your Password',
-                                'Password',
-                                Icon(Icons.security,
-                                    color: Colors.deepPurple[600]),
-                                suffix: Icon(Icons.visibility,
-                                    color: Colors.indigo[100]),
-                                secure: true),
+                            Container(
+                              margin: EdgeInsets.only(top: 16),
+                              child: TextField(
+                                controller: emailC,
+                                cursorColor: Colors.indigo[100],
+                                style: TextStyle(color: Colors.deepPurple[600]),
+                                decoration: InputDecoration(
+                                    prefixIcon: Icon(Icons.email,
+                                        color: Colors.deepPurple[600]),
+                                    hintText: 'example@gmail.com',
+                                    hintStyle:
+                                        TextStyle(color: Colors.indigo[100]),
+                                    labelText: 'Email Address',
+                                    labelStyle:
+                                        TextStyle(color: Colors.indigo[100]),
+                                    enabledBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                          width: 2, color: Colors.indigo[100]),
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
+                                    focusedBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                            width: 2,
+                                            color: Colors.deepPurple[500]),
+                                        borderRadius:
+                                            BorderRadius.circular(8))),
+                              ),
+                            ),
+                            Container(
+                              margin: EdgeInsets.only(top: 16),
+                              child: TextField(
+                                controller: passwordC,
+                                cursorColor: Colors.indigo[100],
+                                style: TextStyle(color: Colors.deepPurple[600]),
+                                obscureText: true,
+                                decoration: InputDecoration(
+                                    suffixIcon: Icon(Icons.visibility,
+                                        color: Colors.indigo[100]),
+                                    prefixIcon: Icon(Icons.security,
+                                        color: Colors.deepPurple[600]),
+                                    hintText: 'Your Password',
+                                    hintStyle:
+                                        TextStyle(color: Colors.indigo[100]),
+                                    labelText: 'Password',
+                                    labelStyle:
+                                        TextStyle(color: Colors.indigo[100]),
+                                    enabledBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                          width: 2, color: Colors.indigo[100]),
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
+                                    focusedBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                            width: 2,
+                                            color: Colors.deepPurple[500]),
+                                        borderRadius:
+                                            BorderRadius.circular(8))),
+                              ),
+                            ),
                             Container(
                               margin: EdgeInsets.only(top: 40, bottom: 70),
                               child: FloatingActionButton(
@@ -83,7 +146,25 @@ class _LoginPageState extends State<LoginPage> {
                                   backgroundColor: Colors.indigo[100],
                                   splashColor: Colors.deepPurple[200],
                                   child: Icon(Icons.arrow_forward),
-                                  onPressed: () {}),
+                                  onPressed: () {
+                                    setState(() {
+                                      (emailC.text == data.email &&
+                                              passwordC.text == data.password)
+                                          ? Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      HomePage()))
+                                          : Flushbar(
+                                              message:
+                                                  "Maybe email or password don't pass",
+                                              duration: Duration(seconds: 3),
+                                              backgroundColor: Colors.pink[300],
+                                              flushbarPosition:
+                                                  FlushbarPosition.TOP,
+                                            ).show(context);
+                                    });
+                                  }),
                             ),
                             ToSignUp()
                           ],
@@ -99,40 +180,13 @@ class _LoginPageState extends State<LoginPage> {
   }
 }
 
-Widget inputField(String text, String label, Widget icon,
-    {Widget suffix, bool secure: false}) {
-  return Container(
-    margin: EdgeInsets.only(top: 16),
-    child: TextField(
-      obscureText: secure,
-      cursorColor: Colors.indigo[100],
-      style: TextStyle(color: Colors.deepPurple[600]),
-      decoration: InputDecoration(
-          suffixIcon: suffix,
-          prefixIcon: icon,
-          hintText: text,
-          hintStyle: TextStyle(color: Colors.indigo[100]),
-          labelText: label,
-          labelStyle: TextStyle(color: Colors.indigo[100]),
-          enabledBorder: OutlineInputBorder(
-            borderSide: BorderSide(width: 2, color: Colors.indigo[100]),
-            borderRadius: BorderRadius.circular(8),
-          ),
-          focusedBorder: OutlineInputBorder(
-              borderSide: BorderSide(width: 2, color: Colors.deepPurple[500]),
-              borderRadius: BorderRadius.circular(8))),
-    ),
-  );
-}
-
 class ToSignUp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.push(context, MaterialPageRoute(builder: (context) {
-          return RegisterPage();
-        }));
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => RegisterPage()));
       },
       child: RichText(
           text: TextSpan(
@@ -152,3 +206,67 @@ class ToSignUp extends StatelessWidget {
     );
   }
 }
+
+// class Tes extends StatefulWidget {
+//   @override
+//   _TesState createState() => _TesState();
+// }
+
+// class _TesState extends State<Tes> {
+//   final GlobalKey<ScaffoldState> _key = GlobalKey<ScaffoldState>();
+
+//   TextEditingController usernameC = TextEditingController();
+//   TextEditingController passwordC = TextEditingController();
+
+//   String username = "admin";
+//   String password = "123";
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       appBar: AppBar(
+//         key: _key,
+//         title: Text('Login'),
+//       ),
+//       body: Column(
+//         children: <Widget>[
+//           Padding(
+//             padding: const EdgeInsets.all(16.0),
+//             child: TextFormField(
+//               controller: usernameC,
+//               decoration: InputDecoration(hintText: 'username'),
+//             ),
+//           ),
+//           SizedBox(height: 8),
+//           Padding(
+//             padding: const EdgeInsets.all(16.0),
+//             child: TextFormField(
+//               controller: passwordC,
+//               decoration: InputDecoration(hintText: 'password'),
+//             ),
+//           ),
+//           SizedBox(height: 8),
+//           RaisedButton(
+//             child: Icon(Icons.arrow_forward),
+//             onPressed: () {
+//               setState(() {
+//                 (usernameC.text == username && passwordC.text == password)
+//                     ? Navigator.push(context,
+//                         MaterialPageRoute(builder: (context) => LoginPage()))
+//                     : Flushbar(
+//                         message: "Maybe email or password don't pass",
+//                         duration: Duration(seconds: 3),
+//                         backgroundColor: Colors.pink[300],
+//                         flushbarPosition: FlushbarPosition.TOP,
+//                       ).show(context);
+//               });
+//             },
+//           )
+//         ],
+//       ),
+//     );
+//   }
+// }
+
+// _key.currentState.showSnackBar(SnackBar(
+//                       content: Text('Maybe')));
