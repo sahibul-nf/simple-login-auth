@@ -1,22 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:login_page_flutter_ui/login_page.dart';
 
-class HomePage extends StatefulWidget {
-  @override
-  _HomePageState createState() => _HomePageState();
-}
-
-class _HomePageState extends State<HomePage> {
-
-  // LoginPage data = LoginPage(email: 'admin', password: '123');
-
+class DashboardAdmin extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: PreferredSize(
           child: AppBar(
             backgroundColor: Colors.indigo,
-            title: Text('Home Page'),
+            title: Text('Dashboard'),
             centerTitle: true,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.vertical(

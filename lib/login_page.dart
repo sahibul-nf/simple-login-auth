@@ -1,28 +1,34 @@
 import 'package:flutter/material.dart';
+import 'package:login_page_flutter_ui/dasboard_admin.dart';
 import 'package:login_page_flutter_ui/home_page.dart';
 import 'package:login_page_flutter_ui/register_page.dart';
 import 'package:flushbar/flushbar.dart';
 
 class LoginPage extends StatefulWidget {
+  List<String> email = [];
+  List<String> password = [];
 
-  String email;
-  String password;
-
-  LoginPage({
-    this.email,
-    this.password
-  });  
+  LoginPage({this.email, this.password});
 
   @override
   _LoginPageState createState() => _LoginPageState();
 }
 
 class _LoginPageState extends State<LoginPage> {
-  
-  LoginPage data = LoginPage(email: 'admin', password: '123');
+  // LoginPage data = LoginPage(email: 'admin', password: '123');
 
   TextEditingController emailC = TextEditingController();
   TextEditingController passwordC = TextEditingController();
+
+  LoginPage dataAdmin = LoginPage(
+    email: ['snf@admin.com', 'syin@admin.com', 'riz@admin.com'],
+    password: ['13', '7', '12'],
+  );
+
+  LoginPage dataUser = LoginPage(
+    email: ['snf@gmail.com', 'syin@gmail.com', 'riz@gmail.com'],
+    password: ['10', '17', '11'],
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -141,28 +147,126 @@ class _LoginPageState extends State<LoginPage> {
                             ),
                             Container(
                               margin: EdgeInsets.only(top: 40, bottom: 70),
+                              
                               child: FloatingActionButton(
                                   elevation: 0,
-                                  backgroundColor: Colors.indigo[100],
+                                  backgroundColor:  Colors.indigo[100],
                                   splashColor: Colors.deepPurple[200],
                                   child: Icon(Icons.arrow_forward),
                                   onPressed: () {
                                     setState(() {
-                                      (emailC.text == data.email &&
-                                              passwordC.text == data.password)
-                                          ? Navigator.push(
+                                      if (emailC.text == dataAdmin.email[0] ||
+                                          emailC.text == dataAdmin.email[1] ||
+                                          emailC.text == dataAdmin.email[2]) {
+                                        if ((emailC.text == dataAdmin.email[0] && passwordC.text ==
+                                                dataAdmin.password[0]) ||
+                                            (emailC.text == dataAdmin.email[1] && passwordC.text ==
+                                                dataAdmin.password[1]) ||
+                                            (emailC.text == dataAdmin.email[2] && passwordC.text ==
+                                                dataAdmin.password[2])) {
+                                          Navigator.push(
                                               context,
                                               MaterialPageRoute(
                                                   builder: (context) =>
-                                                      HomePage()))
-                                          : Flushbar(
-                                              message:
-                                                  "Maybe email or password don't pass",
-                                              duration: Duration(seconds: 3),
-                                              backgroundColor: Colors.pink[300],
-                                              flushbarPosition:
-                                                  FlushbarPosition.TOP,
-                                            ).show(context);
+                                                      DashboardAdmin()));
+                                        } else if (passwordC.text == '' ||
+                                            passwordC.text == '' ||
+                                            passwordC.text == '') {
+                                          Flushbar(
+                                            message: "Your password is null",
+                                            duration: Duration(seconds: 3),
+                                            backgroundColor: Colors.pink[300],
+                                            flushbarPosition:
+                                                FlushbarPosition.TOP,
+                                          ).show(context);
+                                        } else {
+                                          Flushbar(
+                                            message: "Your password is wrong",
+                                            duration: Duration(seconds: 3),
+                                            backgroundColor: Colors.pink[300],
+                                            flushbarPosition:
+                                                FlushbarPosition.TOP,
+                                          ).show(context);
+                                        }
+                                      } else if (emailC.text ==
+                                              dataUser.email[0] ||
+                                          emailC.text == dataUser.email[1] ||
+                                          emailC.text == dataUser.email[2]) {
+                                        if ((emailC.text == dataUser.email[0] &&
+                                                passwordC.text ==
+                                                    dataUser.password[0]) ||
+                                            (emailC.text == dataUser.email[1] &&
+                                                passwordC.text ==
+                                                    dataUser.password[1]) ||
+                                            (emailC.text == dataUser.email[2] &&
+                                                passwordC.text ==
+                                                    dataUser.password[2])) {
+                                          Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      HomePage()));
+                                        } else if (passwordC.text == '' ||
+                                            passwordC.text == '' ||
+                                            passwordC.text == '') {
+                                          Flushbar(
+                                            message: "Your password is null",
+                                            duration: Duration(seconds: 3),
+                                            backgroundColor: Colors.pink[300],
+                                            flushbarPosition:
+                                                FlushbarPosition.TOP,
+                                          ).show(context);
+                                        } else {
+                                          Flushbar(
+                                            message: "Your password is wrong",
+                                            duration: Duration(seconds: 3),
+                                            backgroundColor: Colors.pink[300],
+                                            flushbarPosition:
+                                                FlushbarPosition.TOP,
+                                          ).show(context);
+                                        }
+                                      } else if (emailC.text == '' ||
+                                          emailC.text == '' ||
+                                          emailC.text == '') {
+                                        Flushbar(
+                                          message: "Your email is null",
+                                          duration: Duration(seconds: 3),
+                                          backgroundColor: Colors.pink[300],
+                                          flushbarPosition:
+                                              FlushbarPosition.TOP,
+                                        ).show(context);
+                                      } else if (emailC.text !=
+                                              dataAdmin.email[0] ||
+                                          emailC.text != dataUser.email[0] ||
+                                          emailC.text != dataAdmin.email[1] ||
+                                          emailC.text != dataUser.email[1] ||
+                                          emailC.text != dataAdmin.email[2] ||
+                                          emailC.text != dataUser.email[2]) {
+                                        Flushbar(
+                                          message:
+                                              "Your email is not registered",
+                                          duration: Duration(seconds: 3),
+                                          backgroundColor: Colors.pink[300],
+                                          flushbarPosition:
+                                              FlushbarPosition.TOP,
+                                        ).show(context);
+                                      }
+
+                                      // (emailC.text ==  dataAdmin[0].email &&
+                                      //         passwordC.text == dataAdmin[1].password)
+                                      // ? Navigator.push(
+                                      //     context,
+                                      //     MaterialPageRoute(
+                                      //         builder: (context) =>
+                                      //             HomePage()))
+                                      // : Flushbar(
+                                      //     message:
+                                      //         "Maybe email or password don't pass",
+                                      //     duration: Duration(seconds: 3),
+                                      //     backgroundColor: Colors.pink[300],
+                                      //     flushbarPosition:
+                                      //         FlushbarPosition.TOP,
+                                      //   ).show(context);
                                     });
                                   }),
                             ),
